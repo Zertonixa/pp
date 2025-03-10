@@ -1,0 +1,1 @@
+export { isFist } from "./isFist";

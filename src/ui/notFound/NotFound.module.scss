@@ -1,0 +1,17 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .body {
+    width: 50vw;
+    height: 50vw;
+    background-color: "#63508a";
+    border: 1px solid "#242129";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
