@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    height: 30vw;
+    width: 20vw;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 5vw;
+    border: 5px solid black;
+    border-radius: 25px;
+    background-color: plum;
+}

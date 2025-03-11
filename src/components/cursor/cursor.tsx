@@ -1,16 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styles from "./cursor.module.scss";
+import { clickTrigger } from "../../utils/curosrEvents";
 
 interface CursorProps {
   positionX: number;
   positionY: number;
   fist: boolean;
-  click: boolean;
 }
 
-export const Cursor = ({ positionX, positionY, fist, click }: CursorProps) => {
+export const Cursor = ({ positionX, positionY, fist }: CursorProps) => {
   const cursorRef = useRef<HTMLDivElement | null>(null);
+
 
   const pos = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const target = useRef({
@@ -47,12 +48,18 @@ export const Cursor = ({ positionX, positionY, fist, click }: CursorProps) => {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
+  useEffect(() => {
+    if (fist) {
+      clickTrigger(pos.current.x, pos.current.y);
+    }
+  },[fist]);
+
   return (
     <motion.div
       ref={cursorRef}
       className={styles.cursor}
       style={{
-        backgroundColor: fist ? "red" : click ? "green" : "gray",
+        backgroundColor: fist ? "red" : "gray",
         transform: `translate(${pos.current.x}px, ${pos.current.y}px)`,
       }}
     />

@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Cursor } from "../components/cursor/cursor";
+import { Cursor } from "../components/cursor";
 import { useHolistic } from "./Holistic";
+import "../ui/config/index.scss"
 
 interface LayoutProps {
   children?: ReactNode;
