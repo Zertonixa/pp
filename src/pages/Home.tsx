@@ -1,9 +1,7 @@
-import { MPStart } from "../modules/MPStart/MPStart";
+import { Game } from "../modules/MPStart/Game";
 
-export const Home = () => {
-  return (
-    <div>
-      <MPStart></MPStart>
-    </div>
-  );
-};
+export const Home = () => (
+  <div>
+    <Game />
+  </div>
+);

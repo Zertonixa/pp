@@ -1,58 +1,52 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useCameraStore } from "../../store/cameraStore";
 import styles from "./cursor.module.scss";
-import { clickTrigger } from "../../utils/curosrEvents";
+import { mouseDownTrigger, mouseUpTrigger, mouseEnterTrigger } from "../../utils/curosrEvents";
+import { dragging } from "../../utils/draggingItems";
 
-interface CursorProps {
-  positionX: number;
-  positionY: number;
-  fist: boolean;
-}
-
-export const Cursor = ({ positionX, positionY, fist }: CursorProps) => {
+export const Cursor = () => {
   const cursorRef = useRef<HTMLDivElement | null>(null);
 
-
-  const pos = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
-  const target = useRef({
-    x: positionX * window.innerWidth,
-    y: positionY * window.innerHeight,
+  const pos = useRef<{ x: number; y: number }>({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
   });
 
-  const lerp = (start: number, end: number, amount: number) =>
-    start + (end - start) * amount;
+  const fist = useCameraStore((state) => state.isFist);
+
+  const targetPos = useCameraStore((state) => state.position);
+
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const animation = useRef<number | null>(null);
 
   useEffect(() => {
-    target.current = {
-      x: window.innerWidth - positionX * window.innerWidth,
-      y: positionY * window.innerHeight,
-    };
-  }, [positionX, positionY]);
-
-  useEffect(() => {
-    let animationFrameId: number;
-
-    const updateCursor = () => {
-      pos.current.x = lerp(pos.current.x, target.current.x, 0.1);
-      pos.current.y = lerp(pos.current.y, target.current.y, 0.1);
-
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px)`;
-      }
-
-      animationFrameId = requestAnimationFrame(updateCursor);
-    };
-
-    animationFrameId = requestAnimationFrame(updateCursor);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+    dragging(
+      animation,
+      cursorRef,
+      pos,
+      () => useCameraStore.getState().position.x,
+      () => useCameraStore.getState().position.y,
+      () => true,
+    );
+    mouseEnterTrigger(pos.current.x, pos.current.y)
+  }, [targetPos]);
 
   useEffect(() => {
     if (fist) {
-      clickTrigger(pos.current.x, pos.current.y);
-    }
-  },[fist]);
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+        debounceTimeout.current = null;
+      }
+      mouseDownTrigger(pos.current.x, pos.current.y);
+    } 
+    else {
+      debounceTimeout.current = setTimeout(() => {
+          mouseUpTrigger(pos.current.x, pos.current.y);
+      }, 50);
+      }
+  }, [fist]);
 
   return (
     <motion.div
@@ -60,7 +54,6 @@ export const Cursor = ({ positionX, positionY, fist }: CursorProps) => {
       className={styles.cursor}
       style={{
         backgroundColor: fist ? "red" : "gray",
-        transform: `translate(${pos.current.x}px, ${pos.current.y}px)`,
       }}
     />
   );

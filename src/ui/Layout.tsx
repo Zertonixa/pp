@@ -1,48 +1,25 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { Cursor } from "../components/cursor";
-import { useHolistic } from "./Holistic";
-import "../ui/config/index.scss"
+import { CameraBlock } from "../components/camera/camera";
+import "../ui/config/index.scss";
 
 interface LayoutProps {
   children?: ReactNode;
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const HolisticContext = useHolistic();
-
-  const [lastPos, setLastPos] = useState<{ x: number; y: number }>({
-    x: 0.5,
-    y: 0.5,
-  });
-
-  const hasResults =
-    HolisticContext?.results && HolisticContext.results.length > 0;
-
-  useEffect(() => {
-    if (hasResults)
-      setLastPos({
-        x: HolisticContext.results[9].x,
-        y: HolisticContext.results[9].y,
-      });
-  }, [HolisticContext?.results, hasResults]);
-
   return (
     <div
       style={{
-        width: "100vw",
-        height: "100vh",
         backgroundColor: "#221b30",
         display: "flex",
+        position: "relative",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <Cursor
-        fist={HolisticContext?.fist || false}
-        click={false}
-        positionX={hasResults ? HolisticContext.results[10].x : lastPos.x}
-        positionY={hasResults ? HolisticContext.results[10].y : lastPos.y}
-      />
+      <Cursor />
+      <CameraBlock />
       {children}
     </div>
   );
