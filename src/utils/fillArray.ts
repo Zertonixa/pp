@@ -15,6 +15,7 @@ export function fillArray() {
       id: uuidv4(),
       figure: blocks[rndInt(blocks.length)],
       color: colors[rndInt(colors.length)],
+      isDragging: false,
     });
   }
 

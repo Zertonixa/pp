@@ -1,0 +1,40 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  &Body {
+    display: flex;
+    height: 480px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 20px;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
+    &Score {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 20vw;
+      gap: 20px;
+      @media screen and (max-width: 768px) {
+        width: 90vw;
+      }
+      &Leaders {
+        width: 100%;
+        border: 5px solid rgb(173, 229, 31);
+        height: 100%;
+        @media screen and (max-width: 768px) {
+          display: none;
+        }
+      }
+    }
+    &Block {
+      width: 18vw;
+      height: 100%;
+    }
+  }
+}

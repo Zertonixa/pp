@@ -4,7 +4,7 @@ import { Block } from "../../ui/block/block";
 import { useRef } from "react";
 import { useGameStore } from "../../store/gameStore";
 
-export const Puzzle = ( {id, color, figure} : BlockProps) => {
+export const Puzzle = ({ id, color, figure, isDragging }: BlockProps) => {
   const divRef = useRef<HTMLDivElement>(null);
   const setIsDragging = useGameStore((state) => state.setIsDragging);
   const setDivRef = useGameStore((state) => state.setDraggingBlock);
@@ -13,7 +13,11 @@ export const Puzzle = ( {id, color, figure} : BlockProps) => {
   return (
     <div
       style={{ position: "relative" }}
-      onMouseDown={() => (setDivRef(divRef), setDraggingFigure({id, color, figure}), setIsDragging(true))}
+      onMouseDown={() => (
+        setDivRef(divRef),
+        setDraggingFigure({ id, color, figure, isDragging }),
+        setIsDragging(true)
+      )}
       ref={divRef}
       id={id}
       className={styles.container}
@@ -27,6 +31,7 @@ export const Puzzle = ( {id, color, figure} : BlockProps) => {
             <Block
               color={color}
               value={number}
+              width={isDragging ? 60 : 35}
               key={`row-${rowIndex}-col-${colIndex}`}
             />
           ))}

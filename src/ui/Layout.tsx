@@ -12,6 +12,8 @@ export const Layout = ({ children }: LayoutProps) => {
     <div
       style={{
         backgroundColor: "#221b30",
+        height: "100vh",
+        width: "100vw",
         display: "flex",
         position: "relative",
         flexDirection: "column",

@@ -26,7 +26,6 @@ export const dragging = (
     const distance = Math.hypot(dx, dy);
     const lerpFactor = clamp(distance / 100, 0.1, 0.2);
 
-
     pos.current.x = lerp(pos.current.x, x, lerpFactor);
     pos.current.y = lerp(pos.current.y, y, lerpFactor);
 

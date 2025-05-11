@@ -22,8 +22,8 @@ export const CameraBlock = () => {
         Math.abs(hand[0].y - pos.y) > 0.01
       )
         setCords({
-          x: innerWidth - hand[10].x * innerWidth,
-          y: hand[10].y * innerHeight,
+          x: innerWidth - hand[0].x * innerWidth,
+          y: hand[0].y * innerHeight,
         });
       setFist(isFist(hand));
     }

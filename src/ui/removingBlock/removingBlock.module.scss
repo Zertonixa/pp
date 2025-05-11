@@ -1,0 +1,30 @@
+.shardContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.shard {
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  background-color: var(--block-color);
+  border-radius: 2px;
+  opacity: 1;
+  animation: fallShard 0.4s ease-out forwards;
+  box-shadow:
+    0 0 2px var(--block-color),
+    0 0 4px var(--block-color),
+    0 0 8px var(--block-color);
+}
+
+@keyframes fallShard {
+  from {
+    scale: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    opacity: 0.3;
+  }
+}

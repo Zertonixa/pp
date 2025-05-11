@@ -37,16 +37,16 @@ export function mouseUpTrigger(posX: number, posY: number) {
   }
 }
 
-
-export function mouseEnterTrigger(posX: number, posY: number) {
+export function mouseEnterTrigger(posX: number, posY: number, ref: React.RefObject<any>) {
   const element = document.elementFromPoint(posX, posY);
-  if (element) {
+  if (element && ref.current !== element) {
     const event = new MouseEvent("mouseover", {
       bubbles: true,
       cancelable: true,
       clientX: posX,
       clientY: posY,
     });
-    element.dispatchEvent(event)
+    element.dispatchEvent(event);
+    ref.current = element;
   }
 }

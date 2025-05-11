@@ -1,5 +1,5 @@
 export interface BlockProps {
-    color: string;
-    value: number;
-  }
-  
+  color: string;
+  value: number;
+  width?: number;
+}

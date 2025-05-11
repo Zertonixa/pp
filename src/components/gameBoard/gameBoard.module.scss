@@ -3,7 +3,10 @@
   align-items: center;
   justify-content: center;
   &Body {
-    border: 5px solid red;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 5px solid #7908b1;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;

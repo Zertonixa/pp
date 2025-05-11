@@ -2,8 +2,13 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useCameraStore } from "../../store/cameraStore";
 import styles from "./cursor.module.scss";
-import { mouseDownTrigger, mouseUpTrigger, mouseEnterTrigger } from "../../utils/curosrEvents";
+import {
+  mouseDownTrigger,
+  mouseUpTrigger,
+  mouseEnterTrigger,
+} from "../../utils/curosrEvents";
 import { dragging } from "../../utils/draggingItems";
+import { useGameStore } from "../../store/gameStore";
 
 export const Cursor = () => {
   const cursorRef = useRef<HTMLDivElement | null>(null);
@@ -13,7 +18,11 @@ export const Cursor = () => {
     y: window.innerHeight / 2,
   });
 
+  const isDragging = useGameStore((state) => state.isDragging);
+
   const fist = useCameraStore((state) => state.isFist);
+
+  const lastEnter = useRef<any>(null);
 
   const targetPos = useCameraStore((state) => state.position);
 
@@ -30,7 +39,8 @@ export const Cursor = () => {
       () => useCameraStore.getState().position.y,
       () => true,
     );
-    mouseEnterTrigger(pos.current.x, pos.current.y)
+    
+    mouseEnterTrigger(pos.current.x, pos.current.y, lastEnter);
   }, [targetPos]);
 
   useEffect(() => {
@@ -40,12 +50,12 @@ export const Cursor = () => {
         debounceTimeout.current = null;
       }
       mouseDownTrigger(pos.current.x, pos.current.y);
-    } 
-    else {
+      console.log("Cursor: " + pos.current.x, pos.current.y);
+    } else {
       debounceTimeout.current = setTimeout(() => {
-          mouseUpTrigger(pos.current.x, pos.current.y);
+        mouseUpTrigger(pos.current.x, pos.current.y);
       }, 50);
-      }
+    }
   }, [fist]);
 
   return (
@@ -54,6 +64,7 @@ export const Cursor = () => {
       className={styles.cursor}
       style={{
         backgroundColor: fist ? "red" : "gray",
+        display: isDragging ? "none" : "block",
       }}
     />
   );

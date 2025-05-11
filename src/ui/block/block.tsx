@@ -1,14 +1,17 @@
 import styles from "./block.module.scss";
 import { BlockProps } from "../types/block.ts";
 
-export const Block = ({ color, value }: BlockProps) => {
+export const Block = ({ color, value, width }: BlockProps) => {
   return (
     <div
-      className={styles.container}
-      style={{
-        backgroundColor: value === 1 ? color : "transparent",
-        border: value !== 0 ? "1px solid black" : "none",
-      }}
+      className={value === 1 ? styles.container : styles.defaultContainer}
+      style={
+        {
+          "--block-color": color,
+          width: width,
+          height: width,
+        } as React.CSSProperties
+      }
     ></div>
   );
 };

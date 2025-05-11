@@ -1,6 +1,14 @@
 .container {
-    display: block;
-    width: 30px;
-    height: 30px;
-  }
-  
+  width: 60px;
+  height: 60px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.defaultContainer {
+  position: relative;
+  background-color: "transparent";
+  border: 1px solid black;
+  width: 60px;
+  height: 60px;
+}

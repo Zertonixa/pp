@@ -12,26 +12,18 @@ export const BlockPanel = () => {
   }, [blockPanel.length]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
-    >
-      <div className={styles.container}>
-        {blockPanel.map((block) => (
-          <div className={styles.containerBody}>
-            <Puzzle
-              id={block.id}
-              key={block.id}
-              figure={block.figure}
-              color={block.color}
-            />
-          </div>
-        ))}
-      </div>
+    <div className={styles.container}>
+      {blockPanel.map((block) => (
+        <div className={styles.containerBody}>
+          <Puzzle
+            id={block.id}
+            key={block.id}
+            figure={block.figure}
+            color={block.color}
+            isDragging={false}
+          />
+        </div>
+      ))}
     </div>
   );
 };

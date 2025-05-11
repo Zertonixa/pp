@@ -1,0 +1,14 @@
+.container {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    border: 2px solid #8c308f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &Letter {
+        color: #27cb55;
+        font-weight: 400;
+        font-size: 48px;
+    }
+}
